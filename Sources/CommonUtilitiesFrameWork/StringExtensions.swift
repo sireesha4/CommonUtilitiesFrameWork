@@ -83,3 +83,16 @@ public extension String {
         }
     }
 }
+public extension Array where Element == Int {
+   public func median() -> Int? {
+        // swiftlint:disable empty_count
+        guard count > 0  else { return nil }
+        
+        let sorted = self.sorted()
+        if sorted.count % 2 == 0 {
+            return Int((sorted[(sorted.count / 2)] + sorted[(sorted.count / 2) - 1])) / 2
+        } else {
+            return Int(sorted[(sorted.count - 1) / 2])
+        }
+    }
+}

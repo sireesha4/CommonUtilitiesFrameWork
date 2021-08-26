@@ -219,5 +219,53 @@ public class ConnectionUtils {
         return finalAddress.uppercased()
     }
     
+   public func getDeviceInfo() {
+        // Obtain the machine hardware platform from the `uname()` unix command
+        //
+        // Example of return values
+        //  - `"iPhone8,1"` = iPhone 6s
+        //  - `"iPad6,7"` = iPad Pro (12.9-inch)
+        var unameMachine: String {
+            var utsnameInstance = utsname()
+            uname(&utsnameInstance)
+            let optionalString: String? = withUnsafePointer(to: &utsnameInstance.machine) {
+                $0.withMemoryRebound(to: CChar.self, capacity: 1) {
+                    ptr in String.init(validatingUTF8: ptr)
+                }
+            }
+            return optionalString ?? "N/A"
+        }
+    }
+   public static func getRoundedBattery(insBattery: Int) -> Int {
+            var roundedBattery = (Float(insBattery/5)).rounded(.towardZero)
+            print(roundedBattery)
+            switch roundedBattery {
+            case 0..<2:
+                roundedBattery = 0
+            case 2..<3:
+                roundedBattery = 10
+            case 3..<5:
+                roundedBattery = 20
+            case 5..<7:
+                roundedBattery = 30
+            case 7..<9:
+                roundedBattery = 40
+            case 9..<11:
+                roundedBattery = 50
+            case 11..<13:
+                roundedBattery = 60
+            case 13..<15:
+                roundedBattery = 70
+            case 15..<17:
+                roundedBattery = 80
+            case 17..<19:
+                roundedBattery = 90
+            case 19...20:
+                roundedBattery = 100
+            default:
+                roundedBattery = 100
+            }
+        return Int(roundedBattery)
+        }
 }
 
