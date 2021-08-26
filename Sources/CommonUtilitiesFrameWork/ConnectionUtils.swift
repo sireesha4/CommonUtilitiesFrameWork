@@ -29,7 +29,7 @@ public class ConnectionUtils {
 
     var validDevices: [TelemetryDeviceType] = [TelemetryDeviceType]()
     
-    init() {
+   public init() {
         //NPW - WR9200, NPR - WR9210, NPP - WR9220
         validDevices.append(TelemetryDeviceType(prefix: "NPW", bluetoothBase: "0x205B2A658480L",modelNumber: "WR9200", capabilities: TelemetryDeviceType.RECHARGE)) //thor
         validDevices.append(TelemetryDeviceType(prefix: "NPR", bluetoothBase: "0x205B2A74C6C0L",modelNumber: "WR9210", capabilities: TelemetryDeviceType.RECHARGE)) //thor
@@ -202,7 +202,7 @@ public class ConnectionUtils {
         return ""
     }
     
-    func getTypeForSerialNumber( serialNumber: String) -> TelemetryDeviceType? {
+    public func getTypeForSerialNumber( serialNumber: String) -> TelemetryDeviceType? {
         if(!serialNumber.isEmpty && serialNumber.count >= ConnectionUtils().LENGTH_OF_SERIALNUMBER) {
             for telemetryDeviceType in validDevices {
                 if (serialNumber.substring(startIndex: 0, endIndex: ConnectionUtils().SERIAL_VALUE_START_INDEX).uppercased().contains(telemetryDeviceType.getSerialNumberPrefix()!)) {
@@ -213,7 +213,7 @@ public class ConnectionUtils {
         return nil
     }
     
-    func convertToBluetoothAddressString(address: Int) -> String {
+   public func convertToBluetoothAddressString(address: Int) -> String {
         let btAddress = String(format: "%llX", CLongLong(address))
         let finalAddress = btAddress.separate(every: stepper, with: colonChar)
         return finalAddress.uppercased()

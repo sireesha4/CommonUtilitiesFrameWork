@@ -6,7 +6,7 @@
 
 import Foundation
 
-extension StringProtocol {
+public extension StringProtocol {
     func dropping<S: StringProtocol>(prefix: S) -> SubSequence { hasPrefix(prefix) ? dropFirst(prefix.count) : self[...] }
     var hexaToDecimal: Int { Int(dropping(prefix: "0x"), radix: 16) ?? 0 }
     var hexaToBinary: String { .init(hexaToDecimal, radix: 2) }
@@ -16,14 +16,14 @@ extension StringProtocol {
     var binaryToHexa: String { .init(binaryToDecimal, radix: 16) }
 }
 
-extension String {
+public extension String {
     
     func base64Decoded() -> String? {
         guard let data = Data(base64Encoded: self) else { return nil }
         return String(data: data, encoding: .init(rawValue: 0))
     }
     
-    func hexToStr() -> String {
+  public  func hexToStr() -> String {
 
         let regexPattern = "(0x)?([0-9A-Fa-f]{2})"
         let stepper = 2
@@ -40,7 +40,7 @@ extension String {
         return String(characters)
     }
     
-    func toHexEncodedString(uppercase: Bool = true, prefix: String = "", separator: String = "") -> String {
+    public func toHexEncodedString(uppercase: Bool = true, prefix: String = "", separator: String = "") -> String {
         return unicodeScalars.map { prefix + .init($0.value, radix: 16, uppercase: uppercase) } .joined(separator: separator)
     }
 
@@ -49,7 +49,7 @@ extension String {
         return NSLocalizedString(self, comment: self)
     }
     
-    func substring(startIndex:Int, endIndex:Int) -> String {
+   public func substring(startIndex:Int, endIndex:Int) -> String {
         let start = String.Index(utf16Offset: startIndex, in: self)
         let end = String.Index(utf16Offset: endIndex, in: self)
         let substring = String(self[start..<end])
@@ -59,7 +59,7 @@ extension String {
 
 // For BL MAC Add conversion
     
-    func separate(every stride: Int = 4, with separator: Character = " ") -> String {
+   public func separate(every stride: Int = 4, with separator: Character = " ") -> String {
         return String(enumerated().map { $0 > 0 && $0 % stride == 0 ? [separator, $1] : [$1]}.joined())
     }
 
